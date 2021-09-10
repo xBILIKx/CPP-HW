@@ -6,6 +6,41 @@
 #include <fstream>
 #include <algorithm>
 
+void rectangleSquare()
+{
+    float l, h;
+
+    std::cout << "Введите длину прямоугольника: ";
+    std::cin >> l;
+
+    std::cout << "Введите высоту прямоугольника: ";
+    std::cin >> h;
+
+    std::cout << "Площадь прямоугольника: " << l * h;
+}
+
+void triangleSquare()
+{
+    float a, h;
+
+    std::cout << "Введите высоту треугольника: ";
+    std::cin >> h;
+
+    std::cout << "Введите длину стороны треугольника к которой прилегает высота: ";
+    std::cin >> a;
+
+    std::cout << "Площадь треугольника: " << (a * h) / 2;
+}
+
+void circleSquare()
+{
+    float r;
+
+    std::cout << "Введите радиус круга: ";
+    std::cin >> r;
+
+    std::cout << "Площадь круга: " << M_PI * pow(r, 2);
+}
 
 int main()
 {
@@ -113,16 +148,31 @@ int main()
 
     //std::cout << "m = " << m;
 
-    //float m, S, n, p, r; //hm 3.2 не доделал! #TODO
+    //float m, S, n, p; //hm 3.2 не доделал!
+    //float r1 = -1;
 
-    //std::cout << "Введите значение S: ";
+    //std::cout << "введите значение s: ";
     //std::cin >> S;
 
-    //std::cout << "Введите значение m: ";
+    //std::cout << "введите значение m: ";
     //std::cin >> m;
 
-    //std::cout << "Введите значение n: ";
+    //std::cout << "введите значение n: ";
     //std::cin >> n;
+
+    //for (float r = 0.1; r <= 1; r += 0.000001)
+    //{
+    //    if (m - ((S * r * pow(1 + r, n)) / (12 * (pow(1 + r, n) - 1))) < 0.005f)
+    //    {
+    //        r1 = r;
+    //        break;
+    //    }
+    //}
+
+    //if (r1 == -1)
+    //    std::cout << "Что-то пошло не так!";
+    //else
+    //    std::cout << "Под " << r1 * 100 << " процентов.";
 
     /*std::ifstream read; //hm 3.3
     read.open("D:\\C++ Projects\\CPL2Proj\\CPL2Proj\\A.txt");
@@ -190,4 +240,88 @@ int main()
     //}
 
     //return 0;
+
+    /*
+       Задание 4.1
+    */
+
+    //float numbers[10]; 
+
+    //std::ofstream outfile("A.txt");
+    //
+    //std::cout << "Введите 10 чисел:\n";
+    //for (int i = 0; i < 10; i++)
+    //{
+    //    float n;
+    //    std::cin >> n;
+    //    outfile << n << " ";
+    //}
+    //    
+    //outfile.close();
+
+    //std::ifstream file("A.txt");
+
+    //float n;
+    //float sum = 0;
+
+    //while (file >> n) {
+    //    sum = sum + n;
+    //}
+
+    //file.close();
+
+    //std::cout << "\n\n" << sum;
+
+    /*
+       Задание 4.2
+    */
+    
+    //float n;
+    //
+    //std::cout << "Введите число: ";
+    //std::cin >> n;
+
+    //if (n > 1)
+    //    std::cout << "Число пложительное";
+    //else if(n == 0)
+    //    std::cout << "Это ноль";
+    //else
+    //    std::cout << "Число отрицательное";
+
+
+    /*
+       Задание 4.3
+    */
+    
+    //char figure;
+
+    //std::cout << "Площадь какой фигуры вы хотите измерить?\n1 - Прямоугольника\n2 - Треугольника\n3 - Круга\n";
+    //std::cin >> figure;
+
+    //if (figure == '1')
+    //    rectangleSquare();
+    //else if (figure == '2')
+    //    triangleSquare();
+    //else if (figure == '3')
+    //    circleSquare();
+
+    /*
+       Задание 4.4
+    */
+
+    HWND hwnd = GetConsoleWindow(); //Берём ориентир на консольное окно (В нём будем рисовать)
+    HDC dc = GetDC(hwnd); //Цепляемся к консольному окну
+    RECT window = {}; //Переменная window будет использована для получения ширины и высоты окна
+    HBRUSH brush; //Переменная brush - это кисть, она будет использоваться для закрашивания
+
+    brush = CreateHatchBrush(HS_BDIAGONAL, RGB(0, 255, 0)); // Создаём кисть определённого стиля и цвета
+    SelectObject(dc, brush); //Выбираем кисть
+    RECT WinCoord = {}; //Массив координат окна 
+    GetWindowRect(hwnd, &WinCoord); //Узнаём координаты
+
+    Rectangle(dc, 0, 0, WinCoord.right, WinCoord.bottom); //Нарисовали прямоугольник, закрашенный неким стилем
+    DeleteObject(brush); //Очищаем память от созданной кисти
+
+    ReleaseDC(hwnd, dc); //Освобождаем общий или оконный (не влияющий на класс или локальность) контекст устройства, делая его доступным для других прикладных задач. 
+    std::cin.get();
 }
