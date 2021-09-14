@@ -5,6 +5,20 @@
 #include <Windows.h>
 #include <fstream>
 #include <algorithm>
+#include <list>
+
+void drawStar(HDC dc, int x, int y, int size, int spacing, HBRUSH brush)
+{
+    size -= spacing;
+    
+    POINT vertices1[] = { {x, y + size}, {x + size, y + size / 2.5}, {x + size / 3, y + size / 2.5} };
+    POINT vertices2[] = { {x + size, y + size}, {x, y + size / 2.5}, {x + (size / 3) * 2, y + size / 2.5} };
+    POINT vertices3[] = { {x + size / 2, y}, {x + size / 3, y + size / 2.5}, {x + (size / 3) * 2, y + size / 2.5} };
+    
+    Polygon(dc, vertices1, sizeof(vertices1) / sizeof(vertices1[0]));
+    Polygon(dc, vertices2, sizeof(vertices2) / sizeof(vertices2[0]));
+    Polygon(dc, vertices3, sizeof(vertices3) / sizeof(vertices3[0]));
+}
 
 void rectangleSquare()
 {
@@ -309,19 +323,89 @@ int main()
        Задание 4.4
     */
 
-    HWND hwnd = GetConsoleWindow(); //Берём ориентир на консольное окно (В нём будем рисовать)
-    HDC dc = GetDC(hwnd); //Цепляемся к консольному окну
-    RECT window = {}; //Переменная window будет использована для получения ширины и высоты окна
-    HBRUSH brush; //Переменная brush - это кисть, она будет использоваться для закрашивания
+    /*HWND hwnd = GetConsoleWindow(); 
+    MoveWindow(hwnd, 100, 100, 800, 520, FALSE);
+	HDC dc = GetDC(hwnd); 
+	HBRUSH brush; 
+ 
+	brush = CreateSolidBrush(RGB(255, 255, 255)); 
+	SelectObject(dc, brush); 
+	RECT WinCoord = {};  
+	GetWindowRect(hwnd, &WinCoord); 
+		
+	Rectangle(dc, 0, 0, WinCoord.right, WinCoord.bottom); 		
+	DeleteObject(brush); 
 
-    brush = CreateHatchBrush(HS_BDIAGONAL, RGB(0, 255, 0)); // Создаём кисть определённого стиля и цвета
-    SelectObject(dc, brush); //Выбираем кисть
-    RECT WinCoord = {}; //Массив координат окна 
-    GetWindowRect(hwnd, &WinCoord); //Узнаём координаты
+    brush = CreateSolidBrush(RGB(200, 0, 0));
+    SelectObject(dc, brush);
 
-    Rectangle(dc, 0, 0, WinCoord.right, WinCoord.bottom); //Нарисовали прямоугольник, закрашенный неким стилем
-    DeleteObject(brush); //Очищаем память от созданной кисти
+    for (long i = 0; i <= WinCoord.bottom; i += (WinCoord.bottom / 13) * 2)
+    {
+        Rectangle(dc, 0, i, WinCoord.right, i + (WinCoord.bottom / 13));
+    }
+    DeleteObject(brush);
 
-    ReleaseDC(hwnd, dc); //Освобождаем общий или оконный (не влияющий на класс или локальность) контекст устройства, делая его доступным для других прикладных задач. 
-    std::cin.get();
+    brush = CreateSolidBrush(RGB(0, 0, 255));
+    SelectObject(dc, brush);
+
+    int l = (WinCoord.bottom / 13) * 7;
+    int h = (WinCoord.bottom / 13) * 7;
+    Rectangle(dc, 0, 0, l, h);
+    DeleteObject(brush);
+
+    brush = CreateSolidBrush(RGB(255, 255, 255));
+    SelectObject(dc, brush);
+
+    for (int i = 0; i < 7; i++)
+        for (int j = 0; j < 7; j++)
+            drawStar(dc, (l / 7) * i, (l / 7) * j, l / 7, 7, brush);
+	
+    DeleteObject(brush);
+    ReleaseDC(hwnd, dc);
+	std::cin.get();*/
+
+    /*
+        Задание 4.5
+    */
+
+ //   HWND hwnd = GetConsoleWindow(); 
+ //   //MoveWindow(hwnd, 100, 100, 800, 520, FALSE);
+	//HDC dc = GetDC(hwnd);
+	//HBRUSH brush; 
+ //
+ //   HPEN pen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
+	//SelectObject(dc, pen); 
+	//RECT WinCoord = {};  
+	//GetWindowRect(hwnd, &WinCoord); 
+
+ //   MoveToEx(dc, WinCoord.right / 2, 0, NULL);
+ //   LineTo(dc, WinCoord.right / 2, WinCoord.bottom);
+
+ //   MoveToEx(dc, 0, WinCoord.bottom / 2, NULL);
+ //   LineTo(dc, WinCoord.right, WinCoord.bottom / 2);
+ //   
+ //   DeleteObject(pen);
+ //   
+ //   pen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
+ //   SelectObject(dc, pen);
+
+ //   int y0 = WinCoord.bottom / 2 + 1;
+ //   MoveToEx(dc, 0, y0, NULL);
+ //   for (double x = 0; x < M_PI * 32; x+=0.01) 
+ //   {
+ //       LineTo(dc, x * 10, y0 + (LONG)(sin(x) * 10));
+ //       MoveToEx(dc, x*10, y0 + (LONG)(sin(x) * 10), NULL);
+ //       
+ //       //coordinats[x] = { x * 10, 10 + (LONG)(sin(x) * 10) };
+ //   }
+
+
+ //   
+ //   //Polyline(dc, coordinats, sizeof(coordinats) / sizeof(coordinats[0]));
+ //   DeleteObject(pen);
+ //   
+ //   ReleaseDC(hwnd, dc);
+ //   std::cin.get();
 }
+
+
