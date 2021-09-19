@@ -6,6 +6,99 @@
 #include <fstream>
 #include <algorithm>
 #include <list>
+#include <string>
+
+std::string toUpperStr(std::string str)
+{
+    std::string strCopy = str;
+    str = "";
+    for (char ch : strCopy)
+        str += std::toupper(ch);
+
+    return (str);
+}
+
+int Factorial(int n)
+{
+    int res = 1;
+    for (int i = 1; i <= n; i++)
+        res *= i;
+
+    return res;
+}
+
+int GcdDiv(int a, int b)
+{
+    if (a == 0 || b == 0)
+        return(-1);
+
+    while (a != 0 && b != 0)
+    {
+        if (a > b)
+            a %= b;
+        else
+            b %= a;
+    }
+
+    return (a + b);
+}
+
+int GcdSub(int a, int b)
+{
+    if (a == 0 || b == 0)
+        return(-1);
+
+    while (a != b)
+    {
+        if (a > b)
+            a -= b;
+        else
+            b -= a;
+    }
+
+    return a;
+}
+
+
+std::string Convert(std::string n, int fromB, int toB) {
+
+    char alphabet[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    int newN = 0;
+    std::string res = "";
+
+    if (fromB != 10)
+    {
+        //std::distance(alphabet, std::find(alphabet, alphabet + sizeof(alphabet) / sizeof(alphabet[0]), i));
+        int counter = n.length();
+        for (char i : std::string(n.rbegin(), n.rend()))
+        {
+            int index = std::distance(alphabet, std::find(alphabet, alphabet + sizeof(alphabet) / sizeof(alphabet[0]), i));
+            newN += index * pow(fromB, n.length() - counter);
+            counter--;
+        }
+    }
+    else newN = std::stoi(n);
+
+    if (toB == 10)
+        return std::to_string(newN);
+    else
+    {
+
+        while (newN > 0)
+        {
+            res = alphabet[newN % toB] + res;
+            newN /= toB;
+        }
+
+        return res;
+    }
+}
+
+int randomGen(int m, int c, int i, int s)
+{
+    return ((m * s + i) % c);
+}
 
 void drawStar(HDC dc, int x, int y, int size, int spacing, HBRUSH brush)
 {
@@ -62,7 +155,7 @@ int main()
     SetConsoleOutputCP(1251);
 
     /*float l, h, r, R; //hm 2.1
-    
+
     std::cout << "Введите высоту конуса: ";
     std::cin >> h;
 
@@ -94,7 +187,7 @@ int main()
         w = a * log(x);
     else if(a >= 0 and a >= pow(x, 2))
         w = (float) sqrt(a - pow(x, 2));
-    else  
+    else
     {
         std::cout << "Нет решений";
         return 0;
@@ -191,7 +284,7 @@ int main()
     /*std::ifstream read; //hm 3.3
     read.open("D:\\C++ Projects\\CPL2Proj\\CPL2Proj\\A.txt");
 
-    if (!read.is_open()) 
+    if (!read.is_open())
     {
         std::cout << "Не удалось открыть файл!";
         return 0;
@@ -199,7 +292,7 @@ int main()
 
 
     char ch;
-    while (read.get(ch)) 
+    while (read.get(ch))
     {
         std::cout << ch;
     }
@@ -289,7 +382,7 @@ int main()
     /*
        Задание 4.2
     */
-    
+
     //float n;
     //
     //std::cout << "Введите число: ";
@@ -306,7 +399,7 @@ int main()
     /*
        Задание 4.3
     */
-    
+
     //char figure;
 
     //std::cout << "Площадь какой фигуры вы хотите измерить?\n1 - Прямоугольника\n2 - Треугольника\n3 - Круга\n";
@@ -323,18 +416,18 @@ int main()
        Задание 4.4
     */
 
-    /*HWND hwnd = GetConsoleWindow(); 
+    /*HWND hwnd = GetConsoleWindow();
     MoveWindow(hwnd, 100, 100, 800, 520, FALSE);
-	HDC dc = GetDC(hwnd); 
-	HBRUSH brush; 
- 
-	brush = CreateSolidBrush(RGB(255, 255, 255)); 
-	SelectObject(dc, brush); 
-	RECT WinCoord = {};  
-	GetWindowRect(hwnd, &WinCoord); 
-		
-	Rectangle(dc, 0, 0, WinCoord.right, WinCoord.bottom); 		
-	DeleteObject(brush); 
+    HDC dc = GetDC(hwnd);
+    HBRUSH brush;
+
+    brush = CreateSolidBrush(RGB(255, 255, 255));
+    SelectObject(dc, brush);
+    RECT WinCoord = {};
+    GetWindowRect(hwnd, &WinCoord);
+
+    Rectangle(dc, 0, 0, WinCoord.right, WinCoord.bottom);
+    DeleteObject(brush);
 
     brush = CreateSolidBrush(RGB(200, 0, 0));
     SelectObject(dc, brush);
@@ -359,53 +452,379 @@ int main()
     for (int i = 0; i < 7; i++)
         for (int j = 0; j < 7; j++)
             drawStar(dc, (l / 7) * i, (l / 7) * j, l / 7, 7, brush);
-	
+
     DeleteObject(brush);
     ReleaseDC(hwnd, dc);
-	std::cin.get();*/
+    std::cin.get();*/
 
     /*
         Задание 4.5
     */
 
- //   HWND hwnd = GetConsoleWindow(); 
- //   //MoveWindow(hwnd, 100, 100, 800, 520, FALSE);
-	//HDC dc = GetDC(hwnd);
-	//HBRUSH brush; 
- //
- //   HPEN pen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
-	//SelectObject(dc, pen); 
-	//RECT WinCoord = {};  
-	//GetWindowRect(hwnd, &WinCoord); 
+    //   HWND hwnd = GetConsoleWindow(); 
+    //   //MoveWindow(hwnd, 100, 100, 800, 520, FALSE);
+       //HDC dc = GetDC(hwnd);
+       //HBRUSH brush; 
+    //
+    //   HPEN pen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
+       //SelectObject(dc, pen); 
+       //RECT WinCoord = {};  
+       //GetWindowRect(hwnd, &WinCoord); 
 
- //   MoveToEx(dc, WinCoord.right / 2, 0, NULL);
- //   LineTo(dc, WinCoord.right / 2, WinCoord.bottom);
+    //   MoveToEx(dc, WinCoord.right / 2, 0, NULL);
+    //   LineTo(dc, WinCoord.right / 2, WinCoord.bottom);
 
- //   MoveToEx(dc, 0, WinCoord.bottom / 2, NULL);
- //   LineTo(dc, WinCoord.right, WinCoord.bottom / 2);
- //   
- //   DeleteObject(pen);
- //   
- //   pen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
- //   SelectObject(dc, pen);
+    //   MoveToEx(dc, 0, WinCoord.bottom / 2, NULL);
+    //   LineTo(dc, WinCoord.right, WinCoord.bottom / 2);
+    //   
+    //   DeleteObject(pen);
+    //   
+    //   pen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
+    //   SelectObject(dc, pen);
 
- //   int y0 = WinCoord.bottom / 2 + 1;
- //   MoveToEx(dc, 0, y0, NULL);
- //   for (double x = 0; x < M_PI * 32; x+=0.01) 
- //   {
- //       LineTo(dc, x * 10, y0 + (LONG)(sin(x) * 10));
- //       MoveToEx(dc, x*10, y0 + (LONG)(sin(x) * 10), NULL);
- //       
- //       //coordinats[x] = { x * 10, 10 + (LONG)(sin(x) * 10) };
- //   }
+    //   int y0 = WinCoord.bottom / 2 + 1;
+    //   MoveToEx(dc, 0, y0, NULL);
+    //   for (double x = 0; x < M_PI * 32; x+=0.01) 
+    //   {
+    //       LineTo(dc, x * 10, y0 + (LONG)(sin(x) * 10));
+    //       MoveToEx(dc, x*10, y0 + (LONG)(sin(x) * 10), NULL);
+    //       
+    //       //coordinats[x] = { x * 10, 10 + (LONG)(sin(x) * 10) };
+    //   }
 
 
- //   
- //   //Polyline(dc, coordinats, sizeof(coordinats) / sizeof(coordinats[0]));
- //   DeleteObject(pen);
- //   
- //   ReleaseDC(hwnd, dc);
- //   std::cin.get();
+    //   
+    //   //Polyline(dc, coordinats, sizeof(coordinats) / sizeof(coordinats[0]));
+    //   DeleteObject(pen);
+    //   
+    //   ReleaseDC(hwnd, dc);
+    //   std::cin.get();
+
+    /*
+        Задание 4.6
+    */
+
+    /*char arrRim[] = { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
+    int arrArrab[] = {1, 5, 10, 50, 100, 500, 1000};
+
+    std::string inp;
+    std::string out = "";
+
+    std::cout << "Введите римские числа:\n";
+    std::cin >> inp;
+
+    for (char i : inp) 
+    {
+        int index = std::distance(arrRim, std::find(arrRim, arrRim + sizeof(arrRim) / sizeof(arrRim[0]), i));
+        out += std::to_string(arrArrab[index]);
+    }
+
+    std::cout << "Перевод: \n" << out;*/
+
+    /*
+        Задание 4.7 P.S спросить у учителя че да как, а то вообще ниче не понятно
+    */
+
+    /*int m = 37;
+    int i = 3;
+    int c = 64;
+
+    randomGen(m, c, i, 0);*/
+
+    /*
+        Задание 4.8
+    */
+
+    //float A[3][4] = {
+    //    {5, 2, 0, 10},
+    //    {3, 5, 2, 5},
+    //    {3, 20, 0, 0}
+    //};
+
+    //float B[4][2] = {
+    //    {1.2, 0.5},
+    //    {2.8, 0.4},
+    //    {5, 1},
+    //    {2, 1.5}
+    //};
+
+    //float C[3][2] = {
+    //    {0, 0},
+    //    {0, 0},
+    //    {0, 0}
+    //};
+
+    //for (int i = 0; i < 3; i++)
+    //    for (int j = 0; j < 2; j++)
+    //        for (int k = 0; k < 4; k++)
+    //            C[i][j] += A[i][k] * B[k][j];
+
+    //for (int i = 0; i < 3; i++)
+    //{
+    //    for (int j = 0; j < 2; j++)
+    //        std::cout << C[i][j] << "   ";
+    //    std::cout << "\n";
+    //}
+
+    ////int maxSalesMan = 0;
+    ////int minSalesman = 0;
+    ////int maxCommission = 0;
+    ////int minCommission = 0;
+    ////float moneySumm = 0; //На счет этих двух спросить, а то чет не до конца понятно
+    ////float commissionSum = 0;
+    ////for (int i = 0; i < 3; i++)
+    ////{
+    ////    moneySumm += C[i][0];
+    ////    commissionSum += C[i][1];
+    ////    if (C[i][0] > C[maxSalesMan][0])
+    ////        maxSalesMan = i;
+
+    ////    if (C[i][0] < C[minSalesman][0])
+    ////        minSalesman = i;
+
+    ////    if (C[i][1] > C[maxCommission][1])
+    ////        maxCommission = i;
+
+    ////    if (C[i][1] > C[minCommission][1])
+    ////        minCommission = i;
+    ////}
+
+
+    ////maxSalesMan++;
+    ////minSalesman++;
+    ////maxCommission++;
+    ////minCommission++;
+    
+
+    /*
+        Задание 4.9
+    */
+
+    /*std::string n;
+    int fromB;
+    int toB;
+
+    std::cout << "Введите число: ";
+    std::cin >> n;
+
+    std::cout << "Из какой системы счисления? \n";
+    std::cin >> fromB;
+
+    std::cout << "В какую систему счисления? \n";
+    std::cin >> toB;
+
+    std::cout << "Ответ: " << Convert(n, fromB, toB);*/
+
+    /*
+        Задание 5.1
+    */
+
+    /*int a;
+    int b;
+
+    std::cout << "Введите число a: ";
+    std::cin >> a;
+
+    std::cout << "Введите число b: ";
+    std::cin >> b;
+
+    int gcdDiv = GcdDiv(a, b);
+    int gcdSub = GcdSub(a, b);
+    if (gcdDiv == -1 || gcdSub == -1)
+        std::cout << "Нет такого делителя!";
+    else
+    {
+        std::cout << "НОД делением: " << gcdDiv;
+        std::cout << "\nНОД Вычитанием: " << gcdSub;
+    }*/
+
+    /*
+        Задание 5.2
+    */
+
+    /*int n;
+    
+    std::cout << "Введите число n: ";
+    std::cin >> n;
+
+    int *numbers = new int[n+1];
+
+    for (int i = 0; i <= n; i++)
+        numbers[i] = i;
+
+    for (int i = 2; i <= n; i++)
+    {
+        if (numbers[i] != 0)
+        {
+            std::cout << i << std::endl;
+            for (int j = i * i; j <= n; j += i)
+                numbers[j] = 0;
+        }
+    }*/
+    
+    
+    /*
+        Задание 5.3.1 \ 5.3.8
+    */
+
+    /*std::ifstream file("A.txt");
+
+    if (!file.is_open())
+    {
+        std::cout << "Не удалось открыть файл!";
+        return 0;
+    }
+
+
+    char delimiter;
+    std::cout << "На какой символ заменять пробелы?\n";
+    std::cin >> delimiter;
+
+    char ch;
+    std::string res = "";
+    while (file.get(ch))
+    {
+        if(ch == ' ')
+        {
+            res += delimiter;
+            continue;
+        }
+        else
+            res += ch;
+    }
+
+    file.close();
+
+    std::ofstream outfile("A.txt");
+
+    outfile << res;
+
+    outfile.close();
+
+    
+
+    file.open("A.txt");
+    std::ofstream outfile2("B.txt");
+
+    char ch2;
+    while (file.get(ch2))
+    {
+        outfile2 << int(ch2) << " ";
+    }
+
+    file.close();
+    outfile2.close();*/
+
+    /*
+        Задание 5.4.1 \ 5.4.3
+    */
+
+    //int n;
+
+    //std::cout << "Введите число n: ";
+    //std::cin >> n;
+
+    //float sum = 0;
+    //for (int i = 1; i <= n; i++)
+    //{
+    //    float sinSum = 0;
+    //    for (int j = 1; j <= i; j++)
+    //    {
+    //        sinSum += sin(j /** (180 / M_PI)*/);
+    //    }
+
+    //    sum += i / sinSum;
+    //}
+
+    //std::cout << "Ответ на первое: " << sum << std::endl;
+
+    //sum = 1;
+    //for (int i = 1; i <= n; i++)
+    //{
+    //    int fact = Factorial(i);
+    //    float sinSum = 0;
+    //    for (int j = 2; j <= 2*i; j += 2)
+    //    {
+    //        sinSum += sin(j /** (180 / M_PI)*/);
+    //    }
+
+    //    sum *= fact / sinSum;
+    //}
+
+    //std::cout << "Ответ на третье: " << sum;
+
+    /*
+        Задание 5.5.2
+    */
+
+    std::ifstream file("Books.txt");
+
+    if (!file.is_open())
+    {
+        std::cout << "Не удалось открыть файл!";
+        return 0;
+    }
+
+    char ch;
+    std::string res = "";
+    while (file.get(ch))
+    {
+        res += ch;
+    }
+
+    file.close();
+
+    int size = std::count(res.begin(), res.end(), '\n') + 1;
+    std::string* fullName = new std::string[size];
+    std::string* bookName = new std::string[size];
+    std::string* publishYear = new std::string[size];
+
+    int index = 0;
+    int spaces = 0;
+    for (char c : res)
+    {
+        if (c == '\n')
+        {
+            index++;
+            spaces = 0;
+            continue;
+        }
+
+        if (c == ' ')
+            spaces++;
+
+        if (spaces < 3)
+            fullName[index] += c;
+        else if (spaces < 4)
+            bookName[index] += c;
+        else
+            publishYear[index] += c;
+    }
+
+    std::string name;
+
+    std::cout << "Введите название книги: ";
+    std::cin >> name;
+
+    int answ1 = -1;
+    int answ2 = -1;
+    for (int i = 0; i < size; i++)
+    {
+        if (bookName[i] == " " + name)
+            answ1 = i;
+
+        if (bookName[i] == " Паскаль")
+            answ2 = i;
+    }
+
+    if (answ1 == -1)
+        std::cout << "Ответ 1: такой книги не найдено." << std::endl;
+    else
+        std::cout << "Ответ 1: " << fullName[answ1] << bookName[answ1] << publishYear[answ1] << std::endl;
+
+    if (answ2 == -1)
+        std::cout << "Ответ 2: нет книги с именем \"Паскаль\"" << std::endl;
+    else
+        std::cout << "Ответ 2: " << fullName[answ2] << bookName[answ2] << publishYear[answ2] << std::endl;
 }
-
 
